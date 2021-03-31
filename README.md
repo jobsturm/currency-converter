@@ -1,4 +1,4 @@
-# adyen-test
+# Currency Converter
 
 ## Project setup
 ```

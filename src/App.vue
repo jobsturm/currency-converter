@@ -1,32 +1,130 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" class="currency_converter">
+    <header class="currency_converter__header">
+      <h1 class="headline4">Currency Converter</h1>
+    </header>
+    <main
+      v-if="!requestError && foreignExchange"
+      class="currency_converter__converters"
+    >
+      <Converter
+        class="currency_converter__converter"
+        v-for="index in converterCount"
+        :key="`converter-${index}`"
+        :baseConverter="index === 1"
+      />
+      <div class="currency_converter__controls">
+        <button class="currency_converter_button" @click="addConverter">Add currency</button>
+      </div>
+    </main>
+    <main v-else-if="!requestError">
+      <p class="body1">Loading</p>
+    </main>
+    <main v-else>
+      <p class="body1">
+        Sadly our datasource is currently unreachable, try again later.
+      </p>
+      {{ requestError }}
+    </main>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
+import { Action, State } from 'vuex-class';
+import ForeignExchangeInterface from '@/Interfaces/ForeignExchangeInterface';
+import Converter from '@/components/Converter.vue';
 
-#nav {
-  padding: 30px;
+@Component({
+  components: {
+    Converter,
+  },
+})
+export default class App extends Vue {
+  @State public readonly requestError!:string|null;
+  @State public readonly foreignExchange!:ForeignExchangeInterface|undefined;
+  @Action private getForeignExchange!:CallableFunction;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  converterCount: number;
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  constructor() {
+    super();
+    this.converterCount = 2;
+  }
+
+  private addConverter():void {
+    this.converterCount += 1;
+  }
+
+  private mounted():void {
+    this.getForeignExchange();
   }
 }
+</script>
+
+<style lang="scss">
+  @import '@/style_variables/main.scss';
+
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    font-size: 16px;
+  }
+</style>
+
+<style lang="scss" scoped>
+  @import '@/style_variables/main.scss';
+
+  .currency_converter {
+    margin: 0 auto;
+    width: 50rem;
+    max-width: 100%;
+    padding: 5rem 1rem;
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
+  }
+
+  .currency_converter__converters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  .currency_converter__converter {
+    grid-column-start: 2;
+    @media (max-width: 768px) {
+      grid-column-start: 1;
+    }
+    &:first-of-type {
+      grid-column-start: 1;
+    }
+  }
+  .currency_converter__controls {
+    grid-column-start: 2;
+    @media (max-width: 768px) {
+      grid-column-start: 1;
+    }
+  }
+  .currency_converter_button {
+    @extend .body1;
+    color: $white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 0;
+    background-color: $primary;
+    text-transform: uppercase;
+    transition: all 200ms ease;
+    &:hover, &:focus {
+      background-color: darken($primary, 8);
+      cursor: pointer;
+    }
+  }
 </style>
