@@ -12,8 +12,6 @@
       inputmode="numeric"
       v-model.number="inputAmount"
       @input="inputAmountInputHandler"
-      @focus="acceptChanges = false"
-      @blur="acceptChanges = true"
     />
     <select
       class="converter__currency_type_input input"
@@ -50,13 +48,11 @@ export default class Converter extends Vue {
 
   inputAmount: number;
   currencyType: string;
-  acceptChanges: boolean;
 
   constructor() {
     super();
     this.inputAmount = 5.00;
     this.currencyType = 'EUR';
-    this.acceptChanges = true;
   }
 
   // when one of the converters sets the global conversionAmount
@@ -65,7 +61,6 @@ export default class Converter extends Vue {
   private convertFromEuros():void {
     if (
       !this.foreignExchange
-      || !this.acceptChanges
       || this.conversionAmount === 0
     ) return;
     // if currency is not in rates, currency is the same as the base currency used in the API call
