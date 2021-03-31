@@ -8,6 +8,8 @@
   >
     <input
       class="converter__amount_input input"
+      type="number"
+      inputmode="numeric"
       v-model="inputAmount"
       @input="inputAmountInputHandler"
       @focus="acceptChanges = false"
@@ -86,7 +88,7 @@ export default class Converter extends Vue {
 
   private sanitizeInputAmount():string {
     // Replace comma with dot
-    let amount = this.inputAmount.replace(/,/g, '.');
+    let amount = this.inputAmount;
     // Enforce a max of two decimals
     const decimalPointLength = amount.split('.')[1]?.length || 0;
     if (decimalPointLength > 2) {
@@ -141,6 +143,7 @@ export default class Converter extends Vue {
     flex-shrink: 0;
     margin-left: 0.5rem;
     padding: 0.25rem;
+    text-align: center;
     // safari overwrites
     border-radius: 0;
     -webkit-appearance: none;

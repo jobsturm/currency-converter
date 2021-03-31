@@ -3,7 +3,7 @@ module.exports = {
     config
       .plugin('html')
       .tap((args) => {
-        args[0].title = 'Adyen Techincal Test - Job Sturm';
+        args[0].title = 'Currency Converter - Job Sturm';
         return args;
       });
   },
@@ -13,5 +13,5 @@ module.exports = {
       errors: true,
     },
   },
-  publicPath: '/',
+  publicPath: '',
 };
