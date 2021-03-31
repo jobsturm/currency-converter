@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     foreignExchange: null as ForeignExchangeInterface|null,
+    // The number globally used for conversion, in Euro cents
     conversionAmount: 0 as number,
     requestError: null as string|null,
   },
@@ -34,7 +35,6 @@ export default new Vuex.Store({
   },
   getters: {
     availableCurrencies({ foreignExchange }):Array<string> {
-      // Manually setting the type, getters argument does not have TypeScript support.
       if (!foreignExchange) return [];
       return [foreignExchange.base, ...Object.keys(foreignExchange.rates)];
     },

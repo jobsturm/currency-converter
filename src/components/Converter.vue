@@ -10,7 +10,7 @@
       class="converter__amount_input input"
       type="number"
       inputmode="numeric"
-      v-model="inputAmount"
+      v-model.number="inputAmount"
       @input="inputAmountInputHandler"
       @focus="acceptChanges = false"
       @blur="acceptChanges = true"
@@ -38,6 +38,7 @@ import {
   State,
 } from 'vuex-class';
 import ForeignExchangeInterface from '@/Interfaces/ForeignExchangeInterface';
+import convertToTwoDecimals from '@/helpers/convertToTwoDecimals';
 
 @Component
 export default class Converter extends Vue {
@@ -47,17 +48,19 @@ export default class Converter extends Vue {
   @Getter public readonly availableCurrencies:Array<string>|undefined;
   @Mutation public readonly setConversionAmount!: CallableFunction;
 
-  inputAmount: string;
+  inputAmount: number;
   currencyType: string;
   acceptChanges: boolean;
 
   constructor() {
     super();
-    this.inputAmount = '5.00';
+    this.inputAmount = 5.00;
     this.currencyType = 'EUR';
     this.acceptChanges = true;
   }
 
+  // when one of the converters sets the global conversionAmount
+  // this function will update the inputAmount to reflect that.
   @Watch('conversionAmount')
   private convertFromEuros():void {
     if (
@@ -67,7 +70,8 @@ export default class Converter extends Vue {
     ) return;
     // if currency is not in rates, currency is the same as the base currency used in the API call
     const base = this.foreignExchange.rates[this.currencyType] || 1;
-    this.inputAmount = ((this.conversionAmount * base) / 100).toFixed(2);
+    const rawAmount = (this.conversionAmount * base) / 100;
+    this.inputAmount = convertToTwoDecimals(rawAmount);
   }
 
   // The base input should not change its value when its currency type gets changed.
@@ -86,23 +90,10 @@ export default class Converter extends Vue {
     return (amount * 100) / base;
   }
 
-  private sanitizeInputAmount():string {
-    // Replace comma with dot
-    let amount = this.inputAmount;
-    // Enforce a max of two decimals
-    const decimalPointLength = amount.split('.')[1]?.length || 0;
-    if (decimalPointLength > 2) {
-      const decimalPoints = amount.split('.')[1].substring(0, 2);
-      amount = `${amount.split('.')[0]}.${decimalPoints}`;
-    }
-
-    return amount;
-  }
-
   private inputAmountInputHandler():void {
-    const amount = this.sanitizeInputAmount();
-    this.inputAmount = amount;
-    const amountInEuros = this.convertToEuros(parseFloat(amount));
+    const amount = convertToTwoDecimals(this.inputAmount);
+    if (typeof this.inputAmount === 'number') this.inputAmount = amount;
+    const amountInEuros = this.convertToEuros(amount);
     this.setConversionAmount(amountInEuros);
   }
 
