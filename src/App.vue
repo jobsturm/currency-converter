@@ -72,6 +72,10 @@ export default class App extends Vue {
   html, body {
     margin: 0;
     font-size: 16px;
+    @media (prefers-color-scheme: dark) {
+      background: $dark;
+      color: $white;
+    }
   }
 </style>
 

@@ -87,6 +87,7 @@ export default class Converter extends Vue {
 
   private inputAmountInputHandler():void {
     const amount = convertToTwoDecimals(this.inputAmount);
+    // When you empty a nummeric field, it will return an empty string as its value.
     if (typeof this.inputAmount === 'number') this.inputAmount = amount;
     const amountInEuros = this.convertToEuros(amount);
     this.setConversionAmount(amountInEuros);
@@ -135,19 +136,30 @@ export default class Converter extends Vue {
     -webkit-appearance: none;
   }
   .converter--standard-converter {
-    background: $grey_bg;
+    background: $grey_bg_light;
     .input {
-      background-color: rgba($white, 1);
+      background: rgba($white, 1);
       color: $black;
       border-color: rgba($black, 0.1);
+      @media (prefers-color-scheme: dark) {
+        background: rgba($white, 0.2);
+        color: $white;
+        border-color: rgba($white, 0.1);
+      }
       &:focus {
         border-color: rgba($black, 0.3);
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba($white, 0.3);
+        }
       }
+    }
+    @media (prefers-color-scheme: dark) {
+      background: $grey_bg_dark;
     }
   }
   .converter--base-converter {
     .input {
-      background-color: rgba($white, 0.3);
+      background: rgba($white, 0.3);
       color: $white;
       border-color: rgba($white, 0.5);
       &:focus {
