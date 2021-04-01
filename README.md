@@ -18,12 +18,10 @@ The App renders multiple Converter components, these Converters are dependent on
 * Add i18n
 * Add A11y
 * Add better currency input with support for decimal zeroes
-* Add better Dropdowns, preferably searchable and populated with better data.
+* Add better dropdowns, preferably searchable and populated with better data.
 * Get API data directly from the European Central Bank instead of going via a third party
 * Add PWA support
 * Cache API response
 
 ## API Challenges
-The API I was using first as suggested by the take home test email,
-got changed to a pay model the night of March the 31st and April 1st,
-lucky for me https://ratesapi.io/ has the exact same API response and remains free, so I started using that.
+The API I was using as suggested by the take home test email got changed to a pay model the night of March the 31st and April 1st, lucky for me https://ratesapi.io/ has the exact same API response and remains free, so I started using that.
