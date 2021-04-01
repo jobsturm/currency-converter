@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="currency_converter">
+  <div class="currency_converter">
     <header class="currency_converter__header">
       <h1 class="headline1">Currency Converter</h1>
     </header>
@@ -63,9 +63,9 @@ import Converter from '@/components/Converter.vue';
   },
 })
 export default class App extends Vue {
-  @State public readonly requestError!:string|null;
-  @State public readonly foreignExchange!:ForeignExchangeInterface|undefined;
-  @Action private getForeignExchange!:CallableFunction;
+  @State public readonly requestError!: string|null;
+  @State public readonly foreignExchange!: ForeignExchangeInterface|undefined;
+  @Action private getForeignExchange!: CallableFunction;
 
   converterCount: number;
 
@@ -74,11 +74,11 @@ export default class App extends Vue {
     this.converterCount = 2;
   }
 
-  private addConverter():void {
+  private addConverter(): void {
     this.converterCount += 1;
   }
 
-  private mounted():void {
+  private mounted(): void {
     this.getForeignExchange();
   }
 }

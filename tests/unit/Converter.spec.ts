@@ -25,8 +25,8 @@ const mockCurrencyAPI = {
 };
 
 describe('Converter.vue', () => {
-  let state:stateInterface;
-  let store:Store<stateInterface>;
+  let state: stateInterface;
+  let store: Store<stateInterface>;
 
   beforeEach(() => {
     state = {
