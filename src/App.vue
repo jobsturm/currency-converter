@@ -24,8 +24,23 @@
       <p class="body1">
         Sadly our datasource is currently unreachable, try again later.
       </p>
-      {{ requestError }}
+      <p class="body1">{{ requestError }}</p>
     </main>
+    <footer class="currency_converter__footer">
+      <strong>Created by Job Sturm.</strong>
+      <p>
+        This is a simple currency converter that supports bidirectional currency converting
+        for multiple currencies at the same time. Data is sourced from
+        <a class="currency_converter__anchor" href="https://ratesapi.io/" target="_blank">ratesapi.io</a>,
+        this datasource is updated
+        <a
+          class="currency_converter__anchor"
+          href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
+          target="_blank"
+        >every time</a>
+        the European Central Bank updates their foreign exchange reference rates.
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -98,6 +113,7 @@ export default class App extends Vue {
     grid-template-rows: auto;
     column-gap: 1rem;
     row-gap: 1rem;
+    padding: 0 0 4rem 0;
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
@@ -129,6 +145,19 @@ export default class App extends Vue {
     &:hover, &:focus {
       background-color: darken($primary, 8);
       cursor: pointer;
+    }
+  }
+  .currency_converter__footer {
+    @extend .body1;
+    color: $grey_bg_dark;
+    @media (prefers-color-scheme: dark) {
+      color: $grey_bg_light;
+    }
+  }
+
+  .currency_converter__anchor {
+    @media (prefers-color-scheme: dark) {
+      color: lighten($primary, 20);
     }
   }
 </style>

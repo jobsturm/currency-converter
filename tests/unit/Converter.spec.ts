@@ -16,6 +16,7 @@ localVue.use(Vuex);
 const availableCurrencies = ['EUR', 'CAD', 'GBP', 'USD'];
 const mockCurrencyAPI = {
   rates: {
+    EUR: 1,
     CAD: 2,
     GBP: 4,
     USD: 8,
@@ -31,7 +32,7 @@ describe('Converter.vue', () => {
   beforeEach(() => {
     state = {
       foreignExchange: mockCurrencyAPI,
-      conversionAmount: 5,
+      globalAmount: 5,
       requestError: null,
     };
 
@@ -49,7 +50,7 @@ describe('Converter.vue', () => {
     });
   });
 
-  it('Renders currency from conversionAmount in Store', () => {
+  it('Renders currency from globalAmount in Store', () => {
     const wrapper = shallowMount(Converter, { store, localVue });
     const textInput = <HTMLInputElement><unknown>wrapper.find('input[type="number"]').element;
     expect(textInput.value).to.equal('5');
@@ -77,12 +78,12 @@ describe('Converter.vue', () => {
     const wrapper = shallowMount(Converter, { store, localVue });
     const textInput = wrapper.find('input[type="number"]');
     await textInput.setValue(10);
-    expect(state.conversionAmount).to.equal(10 * 100);
+    expect(state.globalAmount).to.equal(10 * 100);
   });
 
   it('foreignExchange change triggers a new conversion and data render', async () => {
     const wrapper = shallowMount(Converter, { store, localVue });
-    store.commit('setConversionAmount', 100);
+    store.commit('setGlobalAmount', 100);
     const textInput = wrapper.find('input[type="number"]');
     const textInputElement = <HTMLInputElement><unknown>textInput.element;
     await Vue.nextTick();

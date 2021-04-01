@@ -42,10 +42,10 @@ import convertToTwoDecimals from '@/helpers/convertToTwoDecimals';
 @Component
 export default class Converter extends Vue {
   @Prop({ default: false }) public readonly baseConverter!: boolean
-  @State public readonly conversionAmount!:number;
+  @State public readonly globalAmount!:number;
   @State public readonly foreignExchange!:ForeignExchangeInterface;
   @Getter public readonly availableCurrencies:Array<string>|undefined;
-  @Mutation public readonly setConversionAmount!: CallableFunction;
+  @Mutation public readonly setGlobalAmount!: CallableFunction;
 
   inputAmount: number;
   currencyType: string;
@@ -56,20 +56,20 @@ export default class Converter extends Vue {
     this.currencyType = 'EUR';
   }
 
-  // when one of the converters sets the global conversionAmount
-  // this function will update the inputAmount to reflect that.
-  @Watch('conversionAmount')
+  /* when one of the converters sets the global globalAmount
+   * this function will update the inputAmount to reflect that. */
+  @Watch('globalAmount')
   private convertFromEuros():void {
     if (
       !this.foreignExchange
-      || this.conversionAmount === 0
+      || this.globalAmount === 0
     ) return;
     const base = this.foreignExchange.rates[this.currencyType];
-    const rawAmount = (this.conversionAmount * base) / 100;
+    const rawAmount = (this.globalAmount * base) / 100;
     this.inputAmount = convertToTwoDecimals(rawAmount);
   }
 
-  // The base input should not change its value when its currency type gets changed.
+  // The base converter should not change its value when its currency type gets changed.
   private currencyTypeChangeHandler():void {
     if (this.baseConverter) {
       this.inputAmountInputHandler();
@@ -86,14 +86,14 @@ export default class Converter extends Vue {
 
   private inputAmountInputHandler():void {
     const amount = convertToTwoDecimals(this.inputAmount);
-    // When you empty a nummeric field, it will return an empty string as its value.
+    // When you empty a numeric field, it will return an empty string as its value.
     if (typeof this.inputAmount === 'number') this.inputAmount = amount;
     const amountInEuros = this.convertToEuros(amount);
-    this.setConversionAmount(amountInEuros);
+    this.setGlobalAmount(amountInEuros);
   }
 
   private mounted():void {
-    if (this.conversionAmount !== 0) this.convertFromEuros();
+    if (this.globalAmount !== 0) this.convertFromEuros();
   }
 }
 </script>

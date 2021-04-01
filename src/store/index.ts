@@ -6,14 +6,14 @@ Vue.use(Vuex);
 
 interface stateInterface {
   foreignExchange: ForeignExchangeInterface|null,
-  conversionAmount: number,
+  globalAmount: number,
   requestError: string|null,
 }
 
 const baseState:stateInterface = {
   foreignExchange: null,
   // The number globally used for conversion, in Euro cents
-  conversionAmount: 500,
+  globalAmount: 500,
   requestError: null,
 };
 
@@ -21,8 +21,8 @@ const mutations:MutationTree<stateInterface> = {
   setForeignExchange(state, foreignExchange):void {
     Vue.set(state, 'foreignExchange', foreignExchange);
   },
-  setConversionAmount(state:stateInterface, amount:number):void {
-    state.conversionAmount = amount;
+  setGlobalAmount(state:stateInterface, amount:number):void {
+    state.globalAmount = amount;
   },
   setRequestError(state:stateInterface, errorMessage:string):void {
     state.requestError = errorMessage;
