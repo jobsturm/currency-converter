@@ -1,7 +1,7 @@
 # Currency Converter
 
 ## About
-This is a simple currency converter that supports bidirectional currency converting for multiple currencies at the same time. Data is gotten from https://ratesapi.io/, this datasource is updated [every time](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html) the European Central Bank updates their foreign exchange reference rates.
+This is a simple currency converter that supports bidirectional currency converting for multiple currencies at the same time. Data is sourced from https://ratesapi.io/, this datasource is updated [every time](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html) the European Central Bank updates their foreign exchange reference rates.
 
 ## Project setup
 ```
