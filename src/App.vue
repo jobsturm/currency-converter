@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="currency_converter">
     <header class="currency_converter__header">
-      <h1 class="headline4">Currency Converter</h1>
+      <h1 class="headline1">Currency Converter</h1>
     </header>
     <main
       v-if="!requestError && foreignExchange"

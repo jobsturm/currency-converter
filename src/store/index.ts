@@ -31,7 +31,8 @@ const mutations:MutationTree<stateInterface> = {
 
 const actions:ActionTree<stateInterface, stateInterface> = {
   async getForeignExchange({ commit }):Promise<void> {
-    const response = await fetch('https://api.exchangeratesapi.io/latest');
+    // I was using exchangeratesapi.io but they released a new version
+    const response = await fetch('https://api.ratesapi.io/api/latest');
     if (!response.ok) {
       commit('setRequestError', response.statusText);
       return;

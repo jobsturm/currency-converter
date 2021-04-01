@@ -1,29 +1,15 @@
 # Currency Converter
 
+## API Challenges
+The API I was using first as suggested by the take home test email,
+got changed to a pay model the night of March the 31th and April 1st,
+lucky for me https://ratesapi.io/ has the exact same API response and remains free,
+so I started using that.
+
 ## Project setup
 ```
-npm install
+Install dependencies: npm install
+Start development server: npm run serve
+Run unit tests: npm run test:unit
+Lints files: npm run lint
 ```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
