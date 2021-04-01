@@ -64,8 +64,7 @@ export default class Converter extends Vue {
       !this.foreignExchange
       || this.conversionAmount === 0
     ) return;
-    // if currency is not in rates, currency is the same as the base currency used in the API call
-    const base = this.foreignExchange.rates[this.currencyType] || 1;
+    const base = this.foreignExchange.rates[this.currencyType];
     const rawAmount = (this.conversionAmount * base) / 100;
     this.inputAmount = convertToTwoDecimals(rawAmount);
   }
@@ -81,8 +80,7 @@ export default class Converter extends Vue {
 
   private convertToEuros(amount:number):number {
     if (!this.foreignExchange) return 0;
-    // if currency is not in rates, currency is the same as the base currency used in the API call
-    const base = this.foreignExchange.rates[this.currencyType] || 1;
+    const base = this.foreignExchange.rates[this.currencyType];
     return (amount * 100) / base;
   }
 

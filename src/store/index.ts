@@ -13,7 +13,7 @@ interface stateInterface {
 const baseState:stateInterface = {
   foreignExchange: null,
   // The number globally used for conversion, in Euro cents
-  conversionAmount: 0,
+  conversionAmount: 500,
   requestError: null,
 };
 
@@ -31,13 +31,15 @@ const mutations:MutationTree<stateInterface> = {
 
 const actions:ActionTree<stateInterface, stateInterface> = {
   async getForeignExchange({ commit }):Promise<void> {
-    // I was using exchangeratesapi.io but they released a new version
-    const response = await fetch('https://api.ratesapi.io/api/latest');
+    const base = 'EUR';
+    const response = await fetch(`https://api.ratesapi.io/api/latest?base=${base}`);
     if (!response.ok) {
       commit('setRequestError', response.statusText);
       return;
     }
     const foreignExchange:ForeignExchangeInterface = await response.json();
+    // Adding the base rate to the list of rates.
+    foreignExchange.rates[base] = 1;
     commit('setForeignExchange', foreignExchange);
   },
 };
@@ -45,7 +47,7 @@ const actions:ActionTree<stateInterface, stateInterface> = {
 const getters:GetterTree<stateInterface, stateInterface> = {
   availableCurrencies({ foreignExchange }):Array<string> {
     if (!foreignExchange) return [];
-    return [foreignExchange.base, ...Object.keys(foreignExchange.rates)];
+    return Object.keys(foreignExchange.rates);
   },
 };
 
