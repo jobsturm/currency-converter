@@ -9,7 +9,8 @@
     <input
       class="converter__amount_input input"
       type="number"
-      inputmode="numeric"
+      step="any"
+      inputmode="decimal"
       v-model.number="inputAmount"
       @input="inputAmountInputHandler"
     />
