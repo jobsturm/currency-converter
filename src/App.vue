@@ -31,12 +31,18 @@
       <p>
         This is a simple currency converter that supports bidirectional currency converting
         for multiple currencies at the same time. Data is sourced from
-        <a class="currency_converter__anchor" href="https://ratesapi.io/" target="_blank">ratesapi.io</a>,
+        <a
+          class="currency_converter__anchor"
+          href="https://ratesapi.io/"
+          target="_blank"
+          title="Rates API that the application uses"
+        >ratesapi.io</a>,
         this datasource is updated
         <a
           class="currency_converter__anchor"
           href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
           target="_blank"
+          title="European Central Bank foreign exchange reference rates."
         >every time</a>
         the European Central Bank updates their foreign exchange reference rates.
       </p>
