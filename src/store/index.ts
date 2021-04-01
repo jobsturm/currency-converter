@@ -47,7 +47,7 @@ const actions:ActionTree<stateInterface, stateInterface> = {
 const getters:GetterTree<stateInterface, stateInterface> = {
   availableCurrencies({ foreignExchange }):Array<string> {
     if (!foreignExchange) return [];
-    return Object.keys(foreignExchange.rates);
+    return Object.keys(foreignExchange.rates).sort();
   },
 };
 

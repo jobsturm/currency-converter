@@ -13,7 +13,6 @@ import Vue from 'vue';
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-const availableCurrencies = ['EUR', 'CAD', 'GBP', 'USD'];
 const mockCurrencyAPI = {
   rates: {
     EUR: 1,
@@ -46,7 +45,7 @@ describe('Converter.vue', () => {
   it('Renders options currency types when passed', () => {
     const wrapper = shallowMount(Converter, { store, localVue });
     wrapper.findAll('option').wrappers.forEach((optionWrapper, index) => {
-      expect(optionWrapper.text()).to.equal(availableCurrencies[index]);
+      expect(optionWrapper.text()).to.equal(store.getters.availableCurrencies[index]);
     });
   });
 
